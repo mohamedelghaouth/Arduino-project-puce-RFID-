@@ -18,7 +18,7 @@ public class PersonResource {
     private PersonService personService;
 
     @GetMapping("/person/check/{id}")
-    public ResponseEntity<?> personExists(@PathVariable int id){
+    public ResponseEntity<?> personExists(@PathVariable String id){
         boolean userExists=personService.personExists(id);
         HashMap<String, Boolean> responseMap = new HashMap<>();
         responseMap.put("exists",userExists);

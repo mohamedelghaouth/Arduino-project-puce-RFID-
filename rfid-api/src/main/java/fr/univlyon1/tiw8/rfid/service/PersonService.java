@@ -10,7 +10,7 @@ public class PersonService {
     @Autowired
     private PersonRepository personRepository;
 
-    public boolean personExists(int personId){
+    public boolean personExists(String personId){
         return personRepository
                 .findById(personId)
                 .isPresent();

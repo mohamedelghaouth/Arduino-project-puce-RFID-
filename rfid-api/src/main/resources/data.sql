@@ -1,4 +1,4 @@
 insert into person
-values(10000,'John', 'DOE');
+values('SJ920183N','John', 'DOE');
 insert into person
-values(100022,'Firstname', 'LASTNAME');
+values('751ec40','Mohammed', 'EL GHAOUTH');

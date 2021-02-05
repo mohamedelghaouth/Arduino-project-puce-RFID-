@@ -6,21 +6,21 @@ import javax.persistence.Id;
 @Entity
 public class Person {
     @Id
-    private int rfid;
+    private String rfid;
     private String firstName;
     private String lastName;
 
     public Person(){}
 
-    public Person(String firstName, String lastName, int rfid) {
+    public Person(String firstName, String lastName, String rfid) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.rfid = rfid;
     }
-    public int getRfid() {
+    public String getRfid() {
         return rfid;
     }
-    public void setRfid(int rfid) {
+    public void setRfid(String rfid) {
         this.rfid = rfid;
     }
     public String getFirstName() {
