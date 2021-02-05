@@ -9,6 +9,7 @@ public class Person {
     private String rfid;
     private String firstName;
     private String lastName;
+    private boolean hasAccess;
 
     public Person(){}
 
@@ -16,6 +17,13 @@ public class Person {
         this.firstName = firstName;
         this.lastName = lastName;
         this.rfid = rfid;
+    }
+    public boolean isHasAccess() {
+        return hasAccess;
+    }
+
+    public void setHasAccess(boolean hasAccess) {
+        this.hasAccess = hasAccess;
     }
     public String getRfid() {
         return rfid;
