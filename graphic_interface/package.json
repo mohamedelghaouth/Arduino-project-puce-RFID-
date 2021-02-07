@@ -1,31 +1,39 @@
 {
-  "name": "graphic_interface",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start": "node server/index.js",
-    "build": "webpack --mode production",
-    "dev": "webpack --mode development && node server/index.js",
-    "test": "echo \"Error: pas de tests pour le moment\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
+  "name": "mon-app",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.3",
-    "express": "^4.17.1",
-    "react": "^16.14.0",
-    "react-dom": "^16.14.0"
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.5",
+    "@testing-library/user-event": "^12.6.3",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-scripts": "4.0.2",
+    "web-vitals": "^1.1.0"
   },
-  "devDependencies": {
-    "@babel/core": "^7.12.1",
-    "@babel/preset-env": "^7.12.1",
-    "@babel/preset-react": "^7.12.1",
-    "@material-ui/data-grid": "^4.0.0-alpha.18",
-    "babel-loader": "^8.1.0",
-    "file-loader": "^6.1.1",
-    "html-webpack-plugin": "^4.5.0",
-    "webpack": "^5.1.2",
-    "webpack-cli": "^4.0.0"
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
