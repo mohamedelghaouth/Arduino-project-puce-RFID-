@@ -5,23 +5,34 @@ import javax.persistence.Id;
 
 @Entity
 public class Person {
+
     @Id
-    private String rfid;
+    private String id;
     private String firstName;
-    private String lastName;
-    private boolean hasAccess;
 
-    public Person(){}
-
-    public Person(String firstName, String lastName, String rfid) {
+    public Person(String id, String firstName, String lastName, boolean hasAccess, String rfid) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.hasAccess = hasAccess;
         this.rfid = rfid;
     }
+
+    private String lastName;
+    private boolean hasAccess;
+    private String rfid;
+
+    public Person(){}
     public boolean isHasAccess() {
         return hasAccess;
     }
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
     public void setHasAccess(boolean hasAccess) {
         this.hasAccess = hasAccess;
     }

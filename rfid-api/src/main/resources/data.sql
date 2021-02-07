@@ -1,6 +1,6 @@
-insert into person (rfid,first_name,last_name,has_access)
-values('SJ920183N','John', 'DOE',FALSE);
-insert into person (rfid,first_name,last_name,has_access)
-values('751ec40','Mohammed', 'EL GHAOUTH',TRUE);
-insert into person (rfid,first_name,last_name,has_access)
-values('a087c6','Yassine', 'KHATAB',TRUE);
+insert into person (id,first_name,last_name,has_access,rfid)
+values('SJ920183N','John', 'DOE',FALSE,'SJ920183N');
+insert into person (id,first_name,last_name,has_access,rfid)
+values('751ec40','Mohammed', 'EL GHAOUTH',TRUE,'751ec40');
+insert into person (id,first_name,last_name,has_access,rfid)
+values('a087c6','Yassine', 'KHATAB',TRUE,'a087c6');
