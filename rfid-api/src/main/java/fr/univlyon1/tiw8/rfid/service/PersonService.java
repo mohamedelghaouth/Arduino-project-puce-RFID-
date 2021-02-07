@@ -24,7 +24,7 @@ public class PersonService {
         if(person.isPresent()){
             LocalDateTime currentTime = LocalDateTime.now();
             currentTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-            Archive archive= new Archive(person.get(),currentTime);
+            Archive archive= new Archive(person.get(),currentTime,person.get().isHasAccess());
             archiveRepository.save(archive);
             return person.get().isHasAccess();
         }

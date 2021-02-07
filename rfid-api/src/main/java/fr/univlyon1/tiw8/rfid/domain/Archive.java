@@ -11,8 +11,31 @@ public class Archive {
     @OneToOne
     private Person person;
     private LocalDateTime time;
+    private boolean access;
+
+    public Archive(Person person, LocalDateTime time, boolean access) {
+        this.person = person;
+        this.time = time;
+        this.access = access;
+    }
 
     public Archive(){}
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    public boolean isAccess() {
+        return access;
+    }
+
+    public void setAccess(boolean access) {
+        this.access = access;
+    }
 
     public Archive(Person persons, LocalDateTime time) {
         this.person = persons;
