@@ -30,4 +30,12 @@ public class PersonService {
         }
         return false;
     }
+    public String getNameById(String id){
+        Optional<Person> person = personRepository.findById(id);
+        String fullName="";
+        if(person.isPresent()){
+            fullName=person.get().getFirstName()+" "+person.get().getLastName();
+        }
+        return fullName;
+    }
 }

@@ -19,8 +19,10 @@ public class PersonResource {
     @GetMapping("/person/check/{id}")
     public ResponseEntity<?> personExists(@PathVariable String id){
         boolean hasAccess=personService.personExists(id);
-        HashMap<String, Boolean> responseMap = new HashMap<>();
+        String fullname=personService.getNameById(id);
+        HashMap<String, Object> responseMap = new HashMap<>();
         responseMap.put("hasAccess",hasAccess);
+        responseMap.put("fullName",fullname);
         return new ResponseEntity(responseMap, HttpStatus.OK);
     }
 }
