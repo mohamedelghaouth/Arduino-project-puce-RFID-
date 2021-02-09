@@ -1,15 +1,24 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import {Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
+import {
+    Button,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow
+} from "@material-ui/core";
 
 function TabPanel(props) {
-    const { children, value, index, ...other } = props;
+    const {children, value, index, ...other} = props;
 
     return (
         <div
@@ -45,7 +54,10 @@ const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
         backgroundColor: theme.palette.background.paper,
-    },table: {
+        '& > *': {
+            marginTop: theme.spacing(2),
+        },
+    }, table: {
         minWidth: 650,
     }
 }));
@@ -56,67 +68,85 @@ export default function SimpleTabs() {
     const [history, setHistory] = React.useState([]);
     const [list, setList] = React.useState([]);
     const [firstTime, setFirstTime] = React.useState(true);
-    const [color, setColor] = React.useState("secondary");
 
-    const historyData =async ()=> {
+    const historyData = async () => {
         let response =
             await fetch(`http://192.168.78.113/archives`);
         const json = await response.json();
-        const data = json._embedded.archives;
-        // eslint-disable-next-line no-unused-expressions
-        let fetchedData= data.map( (q) =>  {return {"firstName":q.persons.firstName,
-            "lastName":q.persons.lastName, "time":q.time}});
+        let pagination = json.page.totalPages;
+        console.log("pagination : " + pagination);
+        let fetchedData = []
+        let i;
+        for (i = 0; i <= pagination; i++) {
+            let response =
+                await fetch(`http://192.168.78.113/archives?page=` + i);
+            const json = await response.json();
+            const data = json._embedded.archives;
+            // eslint-disable-next-line no-unused-expressions
+            let fetchedData_1 = data.map((q) => {
+                return {
+                    "firstName": q.persons.firstName,
+                    "lastName": q.persons.lastName,
+                    "time": q.time,
+                    "access": q.access,
+                }
+            });
+            console.log("fetchedData_1", fetchedData_1);
+            fetchedData.push(...fetchedData_1);
+        }
+        console.log("fetchedData", fetchedData);
         setHistory(fetchedData);
+
     };
 
-    const listData =async ()=> {
+    const listData = async () => {
         let response =
             await fetch(`http://192.168.78.113/persons`);
         const json = await response.json();
         const data = json._embedded.persons;
         // eslint-disable-next-line no-unused-expressions
-        let fetchedData= data.map( (q) =>  {
-
+        let fetchedData = data.map((q) => {
             let href = q._links.person.href;
             let i = href.lastIndexOf('/');
-            let rfid= href.substring(i+1,href.length);
-            console.log("href :", href);
-            console.log("rfid :", rfid);
-            return {"rfid":rfid,"firstName":q.firstName,"lastName":q.lastName, "hasAccess":q.hasAccess,"href":href}});
+            let rfid = href.substring(i + 1, href.length);
+            return {
+                "rfid": rfid,
+                "firstName": q.firstName,
+                "lastName": q.lastName,
+                "hasAccess": q.hasAccess,
+                "href": href
+            }
+        });
         setList(fetchedData);
         setFirstTime(false);
     };
 
-    if(firstTime) listData();
+    if (firstTime) listData();
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
-        if(newValue == 1) {
+        if (newValue === 1) {
             historyData();
-        }else {
+        } else {
             listData();
         }
     };
 
     const changeColor = (_rfid) => {
-        let temp = list.map( q => {if(q.rfid==_rfid){
-            q.hasAccess= !q.hasAccess;
-            return q;
-        }});
-        console.log("temp :", temp);
-        let lien = temp[0].href;
-        console.log("lien :", lien);
+        let temp = list.filter((q) => q.rfid === _rfid);
+        temp = temp[0];
+        temp.hasAccess = !temp.hasAccess;
+        let lien = temp.href;
         delete temp.href;
         const requestOptions = {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(temp[0])
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(temp)
             //list.persons._links.person.href
         };
         fetch(lien, requestOptions)
-            .then(response => response.json()).then(response => console.log(response));
-
-        listData();
+            .then(response => response.json()).then(response => console.log("reponse put :", response));
+        setFirstTime(true);
     }
 
     return (
@@ -128,7 +158,7 @@ export default function SimpleTabs() {
                 </Tabs>
             </AppBar>
             <TabPanel value={value} index={0}>
-                <TableContainer component={Paper} >
+                <TableContainer component={Paper}>
                     <Table className={classes.table} aria-label="simple table">
                         <TableHead>
                             <TableRow>
@@ -139,12 +169,19 @@ export default function SimpleTabs() {
                         </TableHead>
                         <TableBody>
                             {list.map(row => (
-                                <TableRow key={row.firstName}>
+                                <TableRow key={row.rfid}>
                                     <TableCell component="th" scope="row">
-                                        {row.firstName}
+                                        {row.rfid}
                                     </TableCell>
-                                    <TableCell align="center">{row.lastName}</TableCell>
-                                    <TableCell align="right"><Button variant="contained" color={row.hasAccess ? "primary" : "secondary"} onClick={() => { changeColor(row.rfid) }}>Access</Button></TableCell>
+                                    <TableCell align="center">{(row.firstName).concat(' ', row.lastName)}</TableCell>
+                                    <TableCell align="right"><Button variant="contained"
+                                                                     style={row.hasAccess ? {
+                                                                         backgroundColor: 'green',
+                                                                         color: "#fff"
+                                                                     } : {backgroundColor: 'red', color: "#fff"}}
+                                                                     onClick={() => {
+                                                                         changeColor(row.rfid)
+                                                                     }}>Access</Button></TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
@@ -163,12 +200,13 @@ export default function SimpleTabs() {
                         </TableHead>
                         <TableBody>
                             {history.map(row => (
-                                <TableRow key={row.firstName}>
-                                    <TableCell component="th" scope="row">
+                                <TableRow key={row.firstName}
+                                          style={row.access ? {backgroundColor: 'green'} : {backgroundColor: 'red'}}>
+                                    <TableCell component="th" scope="row" style={{color: "#fff"}}>
                                         {row.firstName}
                                     </TableCell>
-                                    <TableCell align="center">{row.lastName}</TableCell>
-                                    <TableCell align="right">{row.time}</TableCell>
+                                    <TableCell align="center" style={{color: "#fff"}}>{row.lastName}</TableCell>
+                                    <TableCell align="right" style={{color: "#fff"}}>{row.time}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
