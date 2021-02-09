@@ -1,0 +1,17 @@
+{
+  "name": "Arduino_Node_SocketIO",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "Igor Konovalov",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.2",
+    "serialport": "^9.0.6",
+    "socket.io": "^2.4.1"
+  }
+}

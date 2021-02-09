@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Arduino-Node playground</title>
+</head>
+<body>
+    <style>
+        body {
+            transition: all .3s;
+            background-color: red;
+        }
+        .responds {
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+            align-self: center;
+        }
+        #user_name   {
+            font-size: 50px;
+        }
+         #user_badge  {
+            font-size: 50px;
+        }
+    </style>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="index.js"></script>
+</body>
+<div class="responds">
+    <div id="serveur_respond">
+        <center>
+            <p id="user_name">
+        
+            </p>
+      </center>
+    </div>
+    <div id="port_data">
+        <center>
+            <p id="user_badge">
+    
+           </p>
+      </center>
+    </div>
+</div>
+</html>
